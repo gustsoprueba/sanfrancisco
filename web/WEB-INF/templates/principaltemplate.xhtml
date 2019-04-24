@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Biblioteca San Francisco</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                <h:form>  
+                    <p:growl id="mensajesMenuPrincipal"/>
+
+                    <p:menubar id="menuBarPrincipal">
+                        <p:submenu id="submenuEntidades" label="Entidades" icon="ui-icon-gear">                            
+                            <p:menuitem value="Autores"/>
+                            <p:menuitem value="Editoriales"/>
+                            <p:menuitem value="Publicaciones"/>
+                        </p:submenu>
+                        
+                        <p:submenu id="submenuUsuarios" label="Usuarios" icon="ui-icon-person">                            
+                            <p:menuitem value="Crear Usuarios"/>
+                            <p:menuitem value="Perfil"/>                            
+                        </p:submenu>
+
+                        <f:facet name="options">
+                            <p:outputLabel id="lblBienvenidaUsuario" value="Bienvenido Nombre_Usuario"
+                                           style="margin-right: 5px;"/>
+                            <p:commandButton id="btnSalirAplicacion" 
+                                             type="button" 
+                                             value="Desconectar" icon="ui-icon-power" />
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
+
+
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+                Esta es la sección del cuerpo del template
+            </ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">
+                Esta sección representa el pie de pagina del template
+                Se repetirá en todas las páginas que usen este template
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>
