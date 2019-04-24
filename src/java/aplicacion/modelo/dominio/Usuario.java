@@ -10,5 +10,21 @@ package aplicacion.modelo.dominio;
  * @author PCGustso
  */
 public class Usuario {
+    private int dni;
+
+    /**
+     * @return the dni
+     */
+    public int getDni() {
+        return dni;
+    }
+
+    /**
+     * @param dni the dni to set
+     */
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+    
     
 }
