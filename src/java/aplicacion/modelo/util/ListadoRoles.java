@@ -19,6 +19,7 @@ public class ListadoRoles implements Serializable{
 
     public ListadoRoles() {
         listaRoles = new ArrayList<>();
+        
         listaRoles.add(new Rol(1, "administrador", "Usuario con todos los permisos para crear, modificar, eliminar", "N"));
         listaRoles.add(new Rol(2, "usuario", "Usuario solo con permiso de lectura de catálogo", "N"));
     }
