@@ -20,8 +20,32 @@ public class ListadoAutores implements Serializable{
      */
     public ListadoAutores() {
         autores = new ArrayList<>(); // inicializa autores
+        //Creo un autor por defecto en el array de autores
+        Autor autor = new Autor(2345, "Pascal", "blais");
+        autores.add(autor);
     }
 
+    public void agregar(Autor autor){
+        autores.add(autor);
+    }
+    
+    public void eliminar(Autor autor){
+        for(int i = 0; i< autores.size();i++){
+            if(autores.get(i).getCodigo().equals(autor.getCodigo())){
+                autores.remove(i);
+            }
+        }
+        
+    }
+    
+    public void modificar(Autor autor){
+        for(Autor autorActual: autores){
+            if(autorActual.getCodigo().equals(autor.getCodigo())){
+                autorActual = autor;
+            }
+        }
+    }
+    
     /**
      * Constructor parametrizado
      * @param autores el listado de autores
