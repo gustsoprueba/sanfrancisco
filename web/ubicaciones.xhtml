@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/principaltemplate.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="growl" showDetail="true" sticky="true" />  
+                <h:form id="frmUbicacion">
+                    <p:dataTable var="ubicacion" value="#{aBMUbicacionEdicionFormsBean.ubicaciones}">
+                        <p:column headerText="Codigo">
+                            <h:outputText value="#{ubicacion.codigo}" />
+                        </p:column>
+
+                        <p:column headerText="Lugar de Edición">
+                            <h:outputText value="#{ubicacion.lugarEdicion}" />
+                        </p:column>
+
+                        <p:column headerText="Acciones">
+                            <p:commandButton value="Eliminar"
+                                             actionListener="#{aBMUbicacionEdicionFormsBean.eliminarUbicacionSeleccionada(ubicacion)}"
+                                             update="frmUbicacion :growl">                                
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>                    
+                    <p:commandButton value="Crear Ubicacion" id="btnCrearUbicacion"
+                                     actionListener="#{aBMUbicacionEdicionFormsBean.ubicacionEdicionBean.iniciarUbicacionEdicion()}"
+                                     oncomplete="PF('altaUbicacion').show()"
+                                     update="dlgAltaUbicacion">
+
+                    </p:commandButton>                    
+                </h:form>
+                
+                <!-- ********** FORMULARIO PARA REALIZAR EL ALTA DE UNA UBICACION ********-->
+                
+                <p:dialog id="dlgAltaUbicacion"
+                          widgetVar="altaUbicacion"
+                          modal="true" resizable="false"
+                          header="Formulario de alta de ubicaciones de edición">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Codigo" id="lblCodigo"></p:outputLabel>
+                            <p:inputNumber id="txtCodigo" value="#{aBMUbicacionEdicionFormsBean.ubicacionEdicionBean.ubicacionEdicion.codigo}"></p:inputNumber>
+                            <p:outputLabel value="Lugar de Edición" id="lblLugarEdicion"></p:outputLabel>
+                            <p:inputText id="txtLugarEdicion" value="#{aBMUbicacionEdicionFormsBean.ubicacionEdicionBean.ubicacionEdicion.lugarEdicion}"></p:inputText>
+                            
+                            <p:commandButton value="Agregar Lugar de Edición"
+                                             actionListener="#{aBMUbicacionEdicionFormsBean.agregarUbicacion()}"
+                                             update=":frmUbicacion :growl" oncomplete="PF('altaUbicacion').hide()">
+                                                 
+                            </p:commandButton>
+                            
+                            
+                            
+                        </p:panelGrid>
+                        
+
+                    </h:form>
+                    
+                </p:dialog>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

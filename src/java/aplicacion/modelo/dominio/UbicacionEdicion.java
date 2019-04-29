@@ -16,7 +16,7 @@ public class UbicacionEdicion implements Serializable{
      * representa un identificador unívoco para identificar una ubicación de
      * edición
      */
-    private Integer codgo;
+    private Integer codigo;
     /**
      * lugar de edición
      */
@@ -30,22 +30,22 @@ public class UbicacionEdicion implements Serializable{
 
     /**
      * Constructor parametrizado
-     * @param codgo identificador unívoco de una ubicación de edición
+     * @param codigo identificador unívoco de una ubicación de edición
      * @param lugarEdicion nombre del lugar de edición
      */
-    public UbicacionEdicion(Integer codgo, String lugarEdicion) {
-        this.codgo = codgo;
+    public UbicacionEdicion(Integer codigo, String lugarEdicion) {
+        this.codigo = codigo;
         this.lugarEdicion = lugarEdicion;
     }
     
     // SECCIÓN DE GETTERS Y SETTERS
 
-    public Integer getCodgo() {
-        return codgo;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public void setCodgo(Integer codgo) {
-        this.codgo = codgo;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public String getLugarEdicion() {

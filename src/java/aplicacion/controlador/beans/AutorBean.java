@@ -8,11 +8,10 @@ package aplicacion.controlador.beans;
 import aplicacion.dao.IAutorDAO;
 import aplicacion.dao.imp.AutorDAOImp;
 import aplicacion.modelo.dominio.Autor;
+import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -22,7 +21,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class AutorBean {
+public class AutorBean implements Serializable{
 
     private IAutorDAO autorDAO;
     private Autor autor;
