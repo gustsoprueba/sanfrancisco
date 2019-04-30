@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,66 +12,87 @@
 
             <ui:define name="content">
                 
-                <p:growl id="growl" showDetail="true" sticky="true" />  
-                <h:form id="frmAutor">
-                    <p:dataTable var="autor" value="#{autorBean.obtenerAutores()}">
-                        <p:column headerText="Codigo">
-                            <h:outputText value="#{autor.codigo}" />
-                        </p:column>
-
-                        <p:column headerText="Apellido">
-                            <h:outputText value="#{autor.apellido}" />
-                        </p:column>
-
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{autor.nombres}" />
-                        </p:column>
-
-                        <p:column headerText="Acciones">
-                            <p:commandButton value="Eliminar"
-                                             actionListener="#{autorBean.eliminarAutor(autor)}"
-                                             update=":frmAutor, growl">
-                                
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>                    
-                    <p:commandButton value="Crear Autor" id="btnCrearAutor"
-                                     actionListener="#{autorBean.iniciarAutor()}"
-                                     oncomplete="PF('altaAutor').show()"
-                                     update="dlgAltaAutor">
-
-                    </p:commandButton>                    
-                </h:form>
-
-
-                
-                <p:dialog id="dlgAltaAutor"
-                          widgetVar="altaAutor"
-                          modal="true" resizable="false"
-                          header="Formulario de alta de autores">
-                    <h:form>
-                        <p:panelGrid columns="2">
-                            <p:outputLabel value="Codigo" id="lblCodigo"></p:outputLabel>
-                            <p:inputNumber id="txtCodigo" value="#{autorBean.autor.codigo}"></p:inputNumber>
-                            <p:outputLabel value="Apellido" id="lblApellido"></p:outputLabel>
-                            <p:inputText id="txtApellido" value="#{autorBean.autor.apellido}"></p:inputText>
-                            <p:outputLabel id="lblNombres" value="Nombres"></p:outputLabel>
-                            <p:inputText id="txtNombres" value="#{autorBean.autor.nombres}"></p:inputText>
-                            <p:commandButton value="Agregar Autor"
-                                             actionListener="#{autorBean.agregarAutor()}"
-                                             update=":frmAutor, growl" oncomplete="PF('altaAutor').hide()">
-                                                 
-                            </p:commandButton>
-                            
-                            
-                            
-                        </p:panelGrid>
+                <h:form id="frmListadoAutores">
+                    <p:growl id="mensajes" showDetail="true"/>
+                    <p:dataTable id="tblAutores"
+                                 editable="true"
+                                 value="#{aBMAutoresFormsBeans.autores}"
+                                 var="aut">
+                        <f:facet name="header">
+                            LISTADO DE AUTORES
+                        </f:facet>
                         
-
-                    </h:form>
-                    
-                </p:dialog>
+                        <p:ajax event="rowEdit" listener="#{aBMAutoresFormsBeans.onRowEdit}"
+                                update="frmListadoAutores:mensajes"/>
+                        <p:ajax event="rowEditCancel" listener="#{aBMAutoresFormsBeans.onRowEditCancel}"
+                                update="frmListadoAutores:mensajes"/>
+                        
+                        <p:column headerText="Codigo">
+                            <p:outputLabel value="#{aut.codigo}"/>
+                        </p:column>
+                        <p:column headerText="Apellido">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <p:outputLabel value="#{aut.apellido}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtTblApellido" 
+                                                 value="#{aut.apellido}"
+                                                 required="true"/>
+                                </f:facet>
+                            </p:cellEditor>
+                            
+                        </p:column>
+                        <p:column headerText="Nombres">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <p:outputLabel value="#{aut.nombres}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtTblNombres" 
+                                                 value="#{aut.nombres}"
+                                                 required="true"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Opciones">
+                            <p:rowEditor/>
+                            <p:commandButton icon="ui-icon-trash"
+                                             actionListener="#{aBMAutoresFormsBeans.eliminarAutorSeleccionado(aut)}"
+                                             update="frmListadoAutores"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p/>
+                    <p:commandButton id="btnCrearNuevoAutor"
+                                     value="Crear nuevo Autor"
+                                     oncomplete="PF('nuevoAutor').show();"
+                                     update=":dlgNuevoAutor"
+                                     resetValues="true"/>
+                </h:form>
                 
+                <p:dialog id="dlgNuevoAutor"
+                          widgetVar="nuevoAutor"
+                          modal="true"
+                          header="Formulario para registrar un nuevo Autor">
+                    <h:form id="frmNuevoAutor">
+                        <h:panelGrid id="tblNuevoAutor" columns="2">
+                            <p:outputLabel id="lblCodigo" value="Codigo:" for="txtCodigo"/>
+                            <p:inputNumber id="txtCodigo" value="#{aBMAutoresFormsBeans.nuevoAutor.codigo}"
+                                           required="true"/>
+                            <p:outputLabel id="lblApellido" value="Apellido:" for="txtApellido"/>
+                            <p:inputText id="txtApellido" value="#{aBMAutoresFormsBeans.nuevoAutor.apellido}"
+                                         required="true"/>
+                            <p:outputLabel id="lblNombres" value="Nombres:" for="txtNombres"/>
+                            <p:inputText id="txtNombres" value="#{aBMAutoresFormsBeans.nuevoAutor.nombres}"
+                                         required="true"/>
+                            <p:commandButton id="btnRegistrarNuevoAutor"
+                                             value="Registrar Nuevo Autor"
+                                             icon="ui-icon-disk"
+                                             actionListener="#{aBMAutoresFormsBeans.guardarNuevoAutor()}"
+                                             update=":frmListadoAutores"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
                 
             </ui:define>
 

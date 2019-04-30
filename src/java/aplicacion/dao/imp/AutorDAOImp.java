@@ -17,15 +17,13 @@ import java.util.List;
  */
 public class AutorDAOImp implements IAutorDAO, Serializable {
     
-    ListadoAutores listaAutores = new ListadoAutores();
+    private ListadoAutores listaAutores = new ListadoAutores();
 
     @Override
     public List<Autor> obtenerAutores() {
         return listaAutores.getAutores();
     }
 
-    
-    
     @Override
     public void crear(Autor autor) {
         listaAutores.agregar(autor);
