@@ -9,20 +9,23 @@ import aplicacion.dao.IUsuarioDAO;
 import aplicacion.dao.imp.UsuarioDaoImpl;
 import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author caroapaza
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class UsuarioBean implements Serializable{
-
+   private Usuario usuario;
    private IUsuarioDAO iUsuarioDAO;
+   
     public UsuarioBean() {
         iUsuarioDAO = new UsuarioDaoImpl();
+        usuario = new Usuario();
     }
     /**
      * retorna un objeto usuario
@@ -35,7 +38,16 @@ public class UsuarioBean implements Serializable{
     public Usuario verificarCredenciales(Integer dni, String password){
         return iUsuarioDAO.verificarCredenciales(dni, password);
     }
-
+    
+     public void agregarUsuario(){
+        iUsuarioDAO.crearUsuario(usuario);
+           
+    }
+     
+     public List<Usuario> obtenerListaUsuariosActivos(){
+         return iUsuarioDAO.getListaUsuariosActivos();
+     }
+     
     public IUsuarioDAO getiUsuarioDAO() {
         return iUsuarioDAO;
     }
@@ -43,7 +55,13 @@ public class UsuarioBean implements Serializable{
     public void setiUsuarioDAO(IUsuarioDAO iUsuarioDAO) {
         this.iUsuarioDAO = iUsuarioDAO;
     }
-    
-    
-    
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+       
 }
