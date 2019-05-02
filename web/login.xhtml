@@ -35,7 +35,9 @@
                 <p:panel>
                 <h:panelGrid columns="2">
                     <p:outputLabel value="No tienes creada una cuenta?"/>
-                    <p:commandLink value="Nuevo usuario" />
+                    <p:commandLink value="Nuevo usuario" 
+                                   process="@this"
+                                   action="#{usuarioFormBean.generarNuevoUsuario()}"/>
                 </h:panelGrid>
                 
             </p:panel>

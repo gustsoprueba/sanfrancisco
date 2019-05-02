@@ -6,6 +6,7 @@
 package aplicacion.dao;
 
 import aplicacion.modelo.dominio.Usuario;
+import java.util.List;
 
 /**
  *
@@ -13,5 +14,7 @@ import aplicacion.modelo.dominio.Usuario;
  */
 public interface IUsuarioDAO {
     Usuario verificarCredenciales(Integer dni, String password);
+    void crearUsuario(Usuario usuario);
+    List<Usuario> getListaUsuariosActivos();
     
 }

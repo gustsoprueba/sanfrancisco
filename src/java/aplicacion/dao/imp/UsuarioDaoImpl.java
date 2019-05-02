@@ -19,9 +19,11 @@ import java.util.List;
  */
 public class UsuarioDaoImpl implements IUsuarioDAO,Serializable{
     private List<Usuario> listaUsuarios;
+    private ListadoUsuarios listadoUsuarios;
 
     public UsuarioDaoImpl() {
         listaUsuarios = new ListadoUsuarios().getListaUsuarios();
+        listadoUsuarios = new ListadoUsuarios();
     }
     
     
@@ -29,7 +31,7 @@ public class UsuarioDaoImpl implements IUsuarioDAO,Serializable{
     @Override
     public Usuario verificarCredenciales(Integer dni, String password) {
         Usuario usu = null;
-        for(Usuario usuario: listaUsuarios){
+        for(Usuario usuario: listadoUsuarios.obtenerUsuariosActivos()){
             if(usuario.getDni() == dni && usuario.getPassword().equals(password)){
                 usu = usuario;
             }
@@ -37,6 +39,13 @@ public class UsuarioDaoImpl implements IUsuarioDAO,Serializable{
         return usu;
     }
 
+    @Override
+    public void crearUsuario(Usuario usuario) {
+        usuario.setBorrado("N");
+        listadoUsuarios.agregar(usuario);
+        System.out.println("se agregó un usuario: "+usuario);
+    }
+    
     public List<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
@@ -44,7 +53,18 @@ public class UsuarioDaoImpl implements IUsuarioDAO,Serializable{
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
-    
-    
-    
+
+    public ListadoUsuarios getListadoUsuarios() {
+        return listadoUsuarios;
+    }
+
+    public void setListadoUsuarios(ListadoUsuarios listadoUsuarios) {
+        this.listadoUsuarios = listadoUsuarios;
+    }
+
+    @Override
+    public List<Usuario> getListaUsuariosActivos() {
+        return listadoUsuarios.obtenerUsuariosActivos();
+    }
+ 
 }

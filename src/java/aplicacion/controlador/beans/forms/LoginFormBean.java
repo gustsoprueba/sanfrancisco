@@ -11,7 +11,7 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
  * @author caroapaza
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class LoginFormBean implements Serializable{
     @ManagedProperty (value="#{usuarioBean}")
     private UsuarioBean usuarioBean;
@@ -72,5 +72,18 @@ public class LoginFormBean implements Serializable{
             fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "acceso denegado", "las credenciales son incorrectas"));
         }
         return resultado;
+    }
+    
+     /**
+     * Cierra sesión 
+     * @return página login
+     */
+    public String cerrarSesion() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cerrando Sesión", "Cerrando Sesión");
+        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+        return "login?faces-redirect=true";
+                
+      
     }
 }
