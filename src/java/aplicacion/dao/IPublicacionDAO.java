@@ -13,6 +13,7 @@ import java.util.List;
  * @author Ariel Vega
  */
 public interface IPublicacionDAO {
+    void agregarPublicacion(Publicacion nuevaPublicacion);
     List<Publicacion> obtenerPublicaciones();
     
 }

@@ -8,6 +8,7 @@ package aplicacion.controlador.beans;
 import aplicacion.dao.imp.EditorialDAOImp;
 import aplicacion.modelo.dominio.Editorial;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -59,6 +60,10 @@ public class EditorialBean implements Serializable {
     }
     public void eliminarEditorial(Editorial editorial){
         editorialDAOImp.borrar(editorial);
+    }
+  
+    public List<Editorial> obtenerEditoriales(){
+        return editorialDAOImp.obtenerEditoriales();
     }
     
 }

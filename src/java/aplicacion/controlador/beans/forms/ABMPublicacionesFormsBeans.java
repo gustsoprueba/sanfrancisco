@@ -5,15 +5,19 @@
  */
 package aplicacion.controlador.beans.forms;
 
+import aplicacion.controlador.beans.EditorialBean;
 import aplicacion.controlador.beans.PublicacionBean;
+import aplicacion.modelo.dominio.Editorial;
 import aplicacion.modelo.dominio.Publicacion;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -22,7 +26,10 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class ABMPublicacionesFormsBeans implements Serializable{
+    private Publicacion nuevaPublicacion;
     private List<Publicacion> publicaciones;
+    @ManagedProperty(value = "#{editorialBean}")
+    private EditorialBean editorialBean;
     @ManagedProperty(value = "#{publicacionBean}")
     private PublicacionBean publicacionBean;
     /**
@@ -36,18 +43,55 @@ public class ABMPublicacionesFormsBeans implements Serializable{
         publicaciones = publicacionBean.obtenerPublicaciones();
     }
     
+    public void guardarNuevaPublicacion(){
+        publicacionBean.agregarPublicacion(nuevaPublicacion);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        "Transacción Exitosa", "Se ha registrada la nueva publicación"));
+        PrimeFaces.current().executeScript("PF('nuevaPublicacion').hide();");
+        generarPublicaciones();
+        nuevaPublicacion = new Publicacion();
+    }
+    
     @PostConstruct
     public void init(){
+        nuevaPublicacion = new Publicacion();
         generarPublicaciones();
     }
+    
+    public List<Editorial> obtenerEditoriales(){
+        return editorialBean.obtenerEditoriales();
+    }
+
+    public Publicacion getNuevaPublicacion() {
+        return nuevaPublicacion;
+    }
+
+    public void setNuevaPublicacion(Publicacion nuevaPublicacion) {
+        this.nuevaPublicacion = nuevaPublicacion;
+    }
+    
+    
     
     public List<Publicacion> getPublicaciones() {
         return publicaciones;
     }
+    
+    
 
     public void setPublicaciones(List<Publicacion> publicaciones) {
         this.publicaciones = publicaciones;
     }
+
+    public EditorialBean getEditorialBean() {
+        return editorialBean;
+    }
+
+    public void setEditorialBean(EditorialBean editorialBean) {
+        this.editorialBean = editorialBean;
+    }
+    
+    
 
     public PublicacionBean getPublicacionBean() {
         return publicacionBean;

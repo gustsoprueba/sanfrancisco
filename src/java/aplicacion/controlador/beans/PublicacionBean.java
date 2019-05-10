@@ -28,6 +28,10 @@ public class PublicacionBean implements Serializable{
         publicacionDAO = new PublicacionDAOImp();
     }
     
+    public void agregarPublicacion(Publicacion nuevaPublicacion){
+        publicacionDAO.agregarPublicacion(nuevaPublicacion);
+    }
+    
     public List<Publicacion> obtenerPublicaciones(){
         return publicacionDAO.obtenerPublicaciones();
     }

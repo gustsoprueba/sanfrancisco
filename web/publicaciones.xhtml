@@ -12,6 +12,8 @@
 
             <ui:define name="content">
                 <h:form id="frmListadoPublicaciones">
+                    <p:growl id="grwMensajesPublicaciones"
+                             showDetail="true"/>
                     <p:dataTable id="tblPublicaciones"
                                  emptyMessage="Sin Registros"
                                  value="#{aBMPublicacionesFormsBeans.publicaciones}"
@@ -36,11 +38,71 @@
                                 <p:outputLabel value="#{aut.apellido}, #{aut.nombres}"/>
                                 <p:separator/>
                             </ui:repeat>
-                            
-                            
                         </p:column>
                     </p:dataTable>
+                    <p:separator/>
+                    <p:commandButton id="btnNuevaPublicacion"
+                                     icon="ui-icon-plusthick"
+                                     oncomplete="PF('nuevaPublicacion').show()"
+                                     resetValues="true"
+                                     value="Nueva Publicacion"
+                                     update=":dlgNuevaPublicacion">
+
+                    </p:commandButton>
+
                 </h:form>
+
+                <!-- dialogo para registrrar una nueva publicacion -->
+                <p:dialog id="dlgNuevaPublicacion"
+                          header="Formulario para registrar una Nueva Publicación"
+                          modal="true"
+                          widgetVar="nuevaPublicacion">
+                    <h:form id="frmNuevaPublicacion">
+                        <h:panelGrid id="tblNuevaPublicacion" columns="2" 
+                                     cellpadding="2" cellspacing="2">
+                            <p:outputLabel id="lblISBN" value="ISBN:" for="txtISBN"/>
+                            <p:inputText id="txtISBN" 
+                                         maxlength="10"
+                                         size="12"
+                                         required="true"
+                                         value="#{aBMPublicacionesFormsBeans.nuevaPublicacion.isbn}"/>
+                            <p:outputLabel id="blTitulo" value="Titulo:" for="txtTitulo"/>
+                            <p:inputText id="txtTitulo"
+                                         maxlength="60"
+                                         size="62"
+                                         required="true"
+                                         value="#{aBMPublicacionesFormsBeans.nuevaPublicacion.titulo}"/>
+                            <p:outputLabel id="lblFechaInventario" 
+                                           for="txtFechaInventario"
+                                           value="Fecha Innventario"/>
+                            <p:calendar id="txtFechaInventario"
+                                        locale="es"
+                                        maxlength="10"
+                                        pattern="dd/MM/yyyy"
+                                        size="12"
+                                        required="true"
+                                        value="#{aBMPublicacionesFormsBeans.nuevaPublicacion.fechaInventario}"/>
+                            <p:outputLabel id="lblEditorial" for="cmbEditoriales" value="Editorial"/>
+                            <p:selectOneMenu id="cmbEditoriales"
+                                             converter="omnifaces.SelectItemsConverter"
+                                             required="true"
+                                             value="#{aBMPublicacionesFormsBeans.nuevaPublicacion.editorial}">
+                                <f:selectItems value="#{aBMPublicacionesFormsBeans.obtenerEditoriales()}"
+                                               var="editSeleccionada"
+                                               itemLabel="#{editSeleccionada.nombreEditorial}"
+                                               itemValue="#{editSeleccionada}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton id="cmbRegistrarNuevaPublicacion"
+                                             actionListener="#{aBMPublicacionesFormsBeans.guardarNuevaPublicacion()}"
+                                             icon="ui-icon-disk"
+                                             update=":frmListadoPublicaciones"/>
+                            <p:commandButton icon="ui-icon-circle-close"
+                                             oncomplete="PF('nuevaPublicacion').hide()"
+                                             style="float: right;"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+
             </ui:define>
 
         </ui:composition>

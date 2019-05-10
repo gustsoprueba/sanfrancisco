@@ -37,6 +37,8 @@ public class Catalogo implements Serializable{
         publicaciones.add(primeraPub);
         
     }
+    
+    
 
     /**
      * Constructor parametrizado
@@ -44,6 +46,10 @@ public class Catalogo implements Serializable{
      */
     public Catalogo(List<Publicacion> publicaciones) {
         this.publicaciones = publicaciones;
+    }
+    
+    public void agregarPublicacion(Publicacion nuevaPublicacion){
+        publicaciones.add(nuevaPublicacion);
     }
     
     // sección getters y setters

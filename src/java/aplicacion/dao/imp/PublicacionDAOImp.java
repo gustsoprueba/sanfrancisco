@@ -28,5 +28,10 @@ public class PublicacionDAOImp implements Serializable, IPublicacionDAO{
     public List<Publicacion> obtenerPublicaciones() {
         return catalogo.getPublicaciones();
     }
+
+    @Override
+    public void agregarPublicacion(Publicacion nuevaPublicacion) {
+        catalogo.agregarPublicacion(nuevaPublicacion);
+    }
     
 }
