@@ -38,6 +38,10 @@ public class Autor implements Serializable{
         this.apellido = apellido;
         this.nombres = nombres;
     }
+
+    
+    
+    
     
     // SECCIÓN DE GETTERS Y SETTERS
 

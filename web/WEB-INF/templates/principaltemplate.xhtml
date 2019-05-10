@@ -24,11 +24,12 @@
                         <p:submenu id="submenuEntidades" label="Entidades" icon="ui-icon-gear">                            
                             <p:menuitem value="Autores" outcome="autores"
                                         rendered="#{usuarioFormBean.esAdministrador}"/>
-                            <p:menuitem value="Editoriales"
+                            <p:menuitem value="Editoriales" outcome="editoriales"
                                         rendered="#{usuarioFormBean.esAdministrador}"/>
                             <p:menuitem value="Ubicaciones Edición" outcome="ubicaciones"
                                         rendered="#{usuarioFormBean.esAdministrador}"/>
-                            <p:menuitem value="Publicaciones"/>
+                            <p:menuitem value="Publicaciones" outcome="publicaciones"
+                                        rendered="#{usuarioFormBean.esAdministrador}"/>
                         </p:submenu>
                         
                         <p:submenu id="submenuUsuarios" label="Usuarios" icon="ui-icon-person"
