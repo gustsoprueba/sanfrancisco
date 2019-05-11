@@ -65,7 +65,9 @@
                                          maxlength="10"
                                          size="12"
                                          required="true"
-                                         value="#{aBMPublicacionesFormsBeans.nuevaPublicacion.isbn}"/>
+                                         value="#{aBMPublicacionesFormsBeans.nuevaPublicacion.isbn}">
+                                <f:validator validatorId="iSBNValidator"/>
+                            </p:inputText>
                             <p:outputLabel id="blTitulo" value="Titulo:" for="txtTitulo"/>
                             <p:inputText id="txtTitulo"
                                          maxlength="60"

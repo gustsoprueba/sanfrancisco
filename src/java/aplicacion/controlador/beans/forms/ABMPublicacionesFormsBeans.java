@@ -41,6 +41,8 @@ public class ABMPublicacionesFormsBeans implements Serializable{
 
     public void generarPublicaciones(){
         publicaciones = publicacionBean.obtenerPublicaciones();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("publicaciones", publicaciones);
+        
     }
     
     public void guardarNuevaPublicacion(){
