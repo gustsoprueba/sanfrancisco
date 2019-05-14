@@ -36,6 +36,10 @@ public class AutorBean implements Serializable{
         autorDAO.crear(nuevoAutor);
     }
     
+    public void modificarAutor(Autor autorModificado){
+        autorDAO.modificar(autorModificado);
+    }
+    
     public void eliminarAutor(Autor autor){
         autorDAO.borrar(autor);
               

@@ -57,14 +57,11 @@ public class ABMEditorialesFormBean implements Serializable {
     }
     
     public void cargarEditoriales(){
-        editoriales = editorialBean.getEditorialDAOImp().getListadoEditoriales().getEditoriales();
+        editoriales = editorialBean.obtenerEditoriales();
     }
     
     public void onRowEdit(RowEditEvent event) {
         
-        //en caso de trabajar con BD Real deberia lanzar la
-        //actualizacion en la misma, y no solo quedarme con la actualizacion
-        //en el arrayList de memoria.
         
         Editorial editorialModificada = ((Editorial) event.getObject());
         editorialBean.modificarEditorial(editorialModificada);
@@ -83,6 +80,7 @@ public class ABMEditorialesFormBean implements Serializable {
     public void agregarNuevaEditorial(){
         editorialBean.agregarEditoria();
         editorialBean.setEditorial(new Editorial());
+        cargarEditoriales();
         FacesMessage msg = new FacesMessage("Editorial Agregada", "");
         FacesContext.getCurrentInstance().addMessage(null, msg);        
         
@@ -90,6 +88,7 @@ public class ABMEditorialesFormBean implements Serializable {
     
     public void eliminarEditorialSeleccionado(Editorial editorial){
         editorialBean.eliminarEditorial(editorial);
+        cargarEditoriales();
         FacesMessage msg = new FacesMessage("Editorial Eliminada", "");
         FacesContext.getCurrentInstance().addMessage(null, msg);        
         

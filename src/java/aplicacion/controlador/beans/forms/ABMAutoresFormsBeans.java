@@ -39,6 +39,7 @@ public class ABMAutoresFormsBeans implements Serializable{
     
     public void eliminarAutorSeleccionado(Autor autorSeleccionado){
         autorBean.eliminarAutor(autorSeleccionado);
+        generarAutores();
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Se ha eliminado el Autor Seleccionado"));
         generarAutores();
@@ -66,7 +67,8 @@ public class ABMAutoresFormsBeans implements Serializable{
 
     public void onRowEdit(RowEditEvent event) {
         Autor autorModificado = (Autor) event.getObject();
-        autorBean.getAutorDAO().modificar(autorModificado);
+        autorBean.modificarAutor(autorModificado);
+        generarAutores();
         FacesMessage msg = new FacesMessage("Exito", "Autor modificado exitosamente");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }

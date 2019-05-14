@@ -6,50 +6,60 @@
 package aplicacion.dao.imp;
 
 import aplicacion.dao.IEditorialDAO;
+import aplicacion.hibernate.configuracion.HibernateUtil;
 import aplicacion.modelo.dominio.Editorial;
 import aplicacion.modelo.util.ListadoEditoriales;
 import java.io.Serializable;
 import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 
 /**
  *
  * @author candeluchi
  */
 public class EditorialDAOImp implements IEditorialDAO, Serializable {
-
-    private ListadoEditoriales listadoEditoriales;
+    
 
     public EditorialDAOImp() {
-        listadoEditoriales = new ListadoEditoriales();
+        //listadoEditoriales = new ListadoEditoriales();
     }
-
-    public ListadoEditoriales getListadoEditoriales() {
-        return listadoEditoriales;
-    }
-
-    public void setListadoEditoriales(ListadoEditoriales listadoEditoriales) {
-        this.listadoEditoriales = listadoEditoriales;
-    }
-    
-    
+     
     @Override
     public List<Editorial> obtenerEditoriales() {
-        return listadoEditoriales.getEditoriales();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = sesion.createCriteria(Editorial.class);
+        List<Editorial> editoriales = criteria.list();
+        sesion.close();
+        return editoriales;
     }
 
     @Override
     public void crear(Editorial editorial) {
-        listadoEditoriales.agregar(editorial);
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        sesion.beginTransaction();
+        sesion.save(editorial);
+        sesion.getTransaction().commit();
+        sesion.close();
+        //listadoEditoriales.agregar(editorial);
     }
 
     @Override
     public void modificar(Editorial editorial) {
-        listadoEditoriales.modificar(editorial);
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        sesion.beginTransaction();
+        sesion.update(editorial);
+        sesion.getTransaction().commit();
+        sesion.close();
     }
 
     @Override
     public void borrar(Editorial editorial) {
-        listadoEditoriales.eliminar(editorial);
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        sesion.beginTransaction();
+        sesion.delete(editorial);
+        sesion.getTransaction().commit();
+        sesion.close();
     }
     
     
