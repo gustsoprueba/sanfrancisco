@@ -11,14 +11,14 @@ import aplicacion.modelo.dominio.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author caroapaza
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UsuarioBean implements Serializable{
    private Usuario usuario;
    private IUsuarioDAO iUsuarioDAO;
@@ -43,7 +43,14 @@ public class UsuarioBean implements Serializable{
         iUsuarioDAO.crearUsuario(usuario);
            
     }
+     public void modificarUsuario(){
+         iUsuarioDAO.modificarUsuario(usuario);
+     }
      
+     public void eliminarUsuario(){
+         iUsuarioDAO.eliminarUsuario(usuario);
+     }
+        
      public List<Usuario> obtenerListaUsuariosActivos(){
          return iUsuarioDAO.getListaUsuariosActivos();
      }
@@ -57,7 +64,8 @@ public class UsuarioBean implements Serializable{
     }
 
     public Usuario getUsuario() {
-        return usuario;
+       usuario = new Usuario();
+       return usuario;
     }
 
     public void setUsuario(Usuario usuario) {

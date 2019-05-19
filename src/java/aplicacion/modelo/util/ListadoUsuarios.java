@@ -37,7 +37,7 @@ public class ListadoUsuarios implements Serializable{
     public void eliminar(Usuario usuario){
         for(int i = 0; i< listaUsuarios.size();i++){
             if(listaUsuarios.get(i).getDni() == usuario.getDni()){
-                listaUsuarios.remove(i);
+                listaUsuarios.get(i).setBorrado("S");
             }
         }
         

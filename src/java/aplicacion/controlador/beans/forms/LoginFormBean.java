@@ -11,16 +11,21 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author caroapaza
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class LoginFormBean implements Serializable{
+    
+    private static final long serialVersionUID = -9107952969237527819L;
+    
     @ManagedProperty (value="#{usuarioBean}")
     private UsuarioBean usuarioBean;
 
@@ -80,10 +85,22 @@ public class LoginFormBean implements Serializable{
      */
     public String cerrarSesion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cerrando Sesión", "Cerrando Sesión");
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-        return "login?faces-redirect=true";
+        //FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cerrando Sesión", "Cerrando Sesión");
+        //FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+        return "/login?faces-redirect=true";
                 
       
     }
+    
+    
+    public String logout(){
+        	FacesContext context = FacesContext.getCurrentInstance();
+ 		ExternalContext ec = context.getExternalContext();
+ 
+ 		final HttpServletRequest request = (HttpServletRequest)ec.getRequest();
+ 	     request.getSession( false ).invalidate();
+ 	  
+ 	     
+ 	     return "login";
+ 	}
 }

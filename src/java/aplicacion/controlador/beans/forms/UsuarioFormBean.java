@@ -13,8 +13,9 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 
 
@@ -23,18 +24,19 @@ import javax.faces.context.FacesContext;
  * @author caroapaza
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UsuarioFormBean implements Serializable{
     private boolean esAdministrador;
     private boolean esUsuario;
-    
     @ManagedProperty(value="#{usuarioBean}")
     private UsuarioBean usuarioBean;
+    private Usuario usuario;
     
     public UsuarioFormBean() {
+       usuario = new Usuario();
     }
     
-        
+   
     /**
      * Obtiene la lista de usuarios activos
      * @return 
@@ -50,9 +52,10 @@ public class UsuarioFormBean implements Serializable{
     public void agregarNuevoUsuario(){
         //recupero objeto rol usuario
         usuarioBean.getUsuario().setRol(new ListadoRoles().getListaRoles().get(1));
-        usuarioBean.agregarUsuario();
+        usuarioBean.agregarUsuario();        
         FacesContext context = FacesContext.getCurrentInstance(); 
-        context.addMessage(null, new FacesMessage("Éxito",  "Se agregó un Usuario correctamente." ));        
+        context.addMessage(null, new FacesMessage("Éxito",  "Se agregó un Usuario correctamente." ));   
+        RequestContext.getCurrentInstance().execute("PF('dlgAltaUsuario').hide();");
     }
     
     /**
@@ -61,11 +64,12 @@ public class UsuarioFormBean implements Serializable{
      */
     public void agregarNuevoUsuarioAdmin(){
         //recupero objeto rol administrador
-        usuarioBean.getUsuario().setRol(new ListadoRoles().getListaRoles().get(0));
+        usuario.setRol(new ListadoRoles().getListaRoles().get(0));
+        usuarioBean.setUsuario(usuario);
         usuarioBean.agregarUsuario();
         FacesContext context = FacesContext.getCurrentInstance(); 
         context.addMessage(null, new FacesMessage("Éxito",  "Se agregó un Usuario Administrador correctamente." ));
-        
+        RequestContext.getCurrentInstance().execute("PF('dlgAltaUsuario').hide();");
     }
     
     /**
@@ -116,9 +120,25 @@ public class UsuarioFormBean implements Serializable{
     public String mostrarLogin(){
         return "login.xhtml";
     }
+    
+    public void reiniciarObjetoUsuario(){
+        usuario = new Usuario();
+    }
+    
+    public void modificarDatosUsuario(){
+        usuarioBean.setUsuario(usuario);
+        usuarioBean.modificarUsuario();
+        RequestContext.getCurrentInstance().execute("PF('dlgModificarUsuario').hide();");
+    }
 
+    public void asignarUsuario(Usuario usuario){
+       this.usuario = usuario;
+    }
     
-    
+    public void eliminarUsuario(Usuario usuario){
+        usuarioBean.setUsuario(usuario);
+        usuarioBean.eliminarUsuario();
+    }
 
     public boolean isEsAdministrador() {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -155,7 +175,14 @@ public class UsuarioFormBean implements Serializable{
     public void setUsuarioBean(UsuarioBean usuarioBean) {
         this.usuarioBean = usuarioBean;
     }
-    
-    
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     
 }

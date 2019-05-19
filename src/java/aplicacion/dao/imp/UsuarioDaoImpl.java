@@ -43,7 +43,6 @@ public class UsuarioDaoImpl implements IUsuarioDAO,Serializable{
     public void crearUsuario(Usuario usuario) {
         usuario.setBorrado("N");
         listadoUsuarios.agregar(usuario);
-        System.out.println("se agregó un usuario: "+usuario);
     }
     
     public List<Usuario> getListaUsuarios() {
@@ -65,6 +64,17 @@ public class UsuarioDaoImpl implements IUsuarioDAO,Serializable{
     @Override
     public List<Usuario> getListaUsuariosActivos() {
         return listadoUsuarios.obtenerUsuariosActivos();
+    }
+
+    @Override
+    public void modificarUsuario(Usuario usuario) {
+        listadoUsuarios.modificar(usuario);
+    }
+
+    @Override
+    public void eliminarUsuario(Usuario usuario) {
+        usuario.setBorrado("S");
+        listadoUsuarios.eliminar(usuario);
     }
  
 }

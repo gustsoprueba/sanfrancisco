@@ -16,5 +16,7 @@ public interface IUsuarioDAO {
     Usuario verificarCredenciales(Integer dni, String password);
     void crearUsuario(Usuario usuario);
     List<Usuario> getListaUsuariosActivos();
+    void modificarUsuario(Usuario usuario);
+    void eliminarUsuario(Usuario usuario);
     
 }
